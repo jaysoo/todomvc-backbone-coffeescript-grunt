@@ -1,0 +1,7 @@
+node_modules/
+*.sw[a-z0-9]
+docs/public/static/float/
+float/html/*.css
+float/less/*.css
+temp/
+components/

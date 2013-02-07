@@ -1,0 +1,22 @@
+{
+  "name": "my-project",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt": "0.4.0rc7",
+    "grunt-cli": "0.1.6",
+    "grunt-init": "0.2.0rc6",
+    "grunt-contrib-requirejs": "0.4.0rc7",
+    "grunt-contrib-less": "0.5.0rc7",
+    "grunt-contrib-copy": "0.4.0rc7",
+    "grunt-contrib-clean": "0.4.0rc6",
+    "grunt-contrib-coffee": "0.4.0rc7",
+    "grunt-contrib-uglify": "0.1.1rc6",
+    "grunt-contrib-jshint": "0.1.1rc6",
+    "grunt-contrib-connect": "0.1.1rc6",
+    "grunt-contrib-livereload": "0.1.0rc8",
+    "grunt-md5": "git://github.com/jaysoo/grunt-md5.git#21da21561d835a506be8bd3ccb7495c907b31131",
+    "grunt-mocha": "~0.2.1",
+    "grunt-regarde": "~0.1.1"
+  },
+  "devDependencies": {}
+}
