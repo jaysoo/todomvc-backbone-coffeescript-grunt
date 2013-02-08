@@ -14,5 +14,4 @@ define (require) ->
   Backbone.history.start()
 
 
-
   new AppView()

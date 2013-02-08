@@ -33,6 +33,7 @@ define (require) ->
         @listenTo Data.Todos, "change:completed", @filterOne
         @listenTo Data.Todos, "filter", @filterAll
         @listenTo Data.Todos, "all", @render
+        window.Todos = Data.Todos
         Data.Todos.fetch()
 
       # Re-rendering the App just means refreshing the statistics -- the rest
