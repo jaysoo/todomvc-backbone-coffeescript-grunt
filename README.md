@@ -1,8 +1,15 @@
-This is a sample project written in CoffeeScript and LESS.
+This is a Todo app built using:
+
+- [Backbone](http://backbonejs.org)
+- [RequireJS](http://requirejs.org)
+- [CoffeeScript](coffeescript.org)
+
+The original Backbone app is written by [Addy Osmani](https://github.com/addyosmani) as a part of [TodoMVC](http://todomvc.com/).
 
 Compilation is handled through [Grunt](http://gruntjs.com/).
 
 Browser JavaScript components are handled using [Bower](http://twitter.github.com/bower/).
+
 
 Getting Started
 ---------------
@@ -21,6 +28,16 @@ Make sure that you add the npm bin directory to your PATH in `.bashrc`:
 
     # Sample path if npm installed through Homebrew
     export PATH="/usr/local/share/npm/bin:$PATH"
+
+
+Running
+-------
+
+You can start the server using the `grunt` command.
+
+Todo page: [http://localhost:9001/www/](http://localhost:9001/www/)
+
+Any stylesheet and HTML changes will live-reload the page so you don't need manual refreshes.
 
 
 Installing/Updating dependencies
@@ -46,6 +63,7 @@ Using grunt:
 
 This will create a dist folder with the files ready for use in your project.
 
+
 Testing
 -------
 
@@ -56,15 +74,6 @@ Testing
 
 2) In browser:
 
-    grunt connect:test
+    grunt
 
 Then browse to [http://localhost:9001/test/index.html](http://localhost:9001/test/index.html).
-
-Development
------------
-
-You can run the development server using the `grunt` command. This will start a server on port 9001, and the root is the root of the project.
-
-e.g. http://localhost:9001/example/
-
-Any stylesheet and HTML changes will live-reload the page so you don't need manual refreshes.
