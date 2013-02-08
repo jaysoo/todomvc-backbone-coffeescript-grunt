@@ -3,7 +3,7 @@ define (require) ->
 
   Keys = require('cs!constants').Keys
   TodoView = require 'cs!views/todo'
-  Data = require 'cs!data'
+  AppData = require 'appdata'
 
 
   AppView = Backbone.View.extend(
@@ -28,27 +28,26 @@ define (require) ->
         @$input = @$("#new-todo")
         @$footer = @$("#footer")
         @$main = @$("#main")
-        @listenTo Data.Todos, "add", @addOne
-        @listenTo Data.Todos, "reset", @addAll
-        @listenTo Data.Todos, "change:completed", @filterOne
-        @listenTo Data.Todos, "filter", @filterAll
-        @listenTo Data.Todos, "all", @render
-        window.Todos = Data.Todos
-        Data.Todos.fetch()
+        @listenTo AppData.Todos, "add", @addOne
+        @listenTo AppData.Todos, "reset", @addAll
+        @listenTo AppData.Todos, "change:completed", @filterOne
+        @listenTo AppData.Todos, "filter", @filterAll
+        @listenTo AppData.Todos, "all", @render
+        AppData.Todos.fetch()
 
       # Re-rendering the App just means refreshing the statistics -- the rest
       # of the app doesn't change.
       render: ->
-        completed = Data.Todos.completed().length
-        remaining = Data.Todos.remaining().length
-        if Data.Todos.length
+        completed = AppData.Todos.completed().length
+        remaining = AppData.Todos.remaining().length
+        if AppData.Todos.length
           @$main.show()
           @$footer.show()
           @$footer.html @statsTemplate(
             completed: completed
             remaining: remaining
           )
-          @$("#filters li a").removeClass("selected").filter("[href=\"#/" + (Data.TodoFilter or "") + "\"]").addClass "selected"
+          @$("#filters li a").removeClass("selected").filter("[href=\"#/" + (AppData.TodoFilter or "") + "\"]").addClass "selected"
         else
           @$main.hide()
           @$footer.hide()
@@ -63,35 +62,35 @@ define (require) ->
       # Add all items in the **Todos** collection at once.
       addAll: ->
         @$("#todo-list").html ""
-        Data.Todos.each @addOne, this
+        AppData.Todos.each @addOne, this
 
       filterOne: (todo) ->
         todo.trigger "visible"
 
       filterAll: ->
-        Data.Todos.each @filterOne, this
+        AppData.Todos.each @filterOne, this
 
       # Generate the attributes for a new Todo item.
       newAttributes: ->
         title: @$input.val().trim()
-        order: Data.Todos.nextOrder()
+        order: AppData.Todos.nextOrder()
         completed: false
 
       # If you hit return in the main input field, create new **Todo** model,
       # persisting it to *localStorage*.
       createOnEnter: (e) ->
         return  if e.which isnt Keys.ENTER or not @$input.val().trim()
-        Data.Todos.create @newAttributes()
+        AppData.Todos.create @newAttributes()
         @$input.val ""
 
       # Clear all completed todo items, destroying their models.
       clearCompleted: ->
-        _.invoke Data.Todos.completed(), "destroy"
+        _.invoke AppData.Todos.completed(), "destroy"
         false
 
       toggleAllComplete: ->
         completed = @allCheckbox.checked
-        Data.Todos.each (todo) ->
+        AppData.Todos.each (todo) ->
           todo.save completed: completed
 
     )

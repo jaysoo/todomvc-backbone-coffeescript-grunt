@@ -1,6 +1,6 @@
 define (require) ->
   AppView = require 'cs!views/app'
-  Data = require 'cs!data'
+  AppData = require 'appdata'
   Workspace = require 'cs!routers/router'
 
   # Require an implementation of the TodoList.
@@ -9,8 +9,8 @@ define (require) ->
 
 
   # Setting up the application data.
-  Data.Todos = new TodoList()
-  Data.TodoRouter = new Workspace()
+  AppData.Todos = new TodoList()
+  AppData.TodoRouter = new Workspace()
   Backbone.history.start()
 
 

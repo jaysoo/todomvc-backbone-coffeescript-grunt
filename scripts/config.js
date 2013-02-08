@@ -3,6 +3,9 @@ require.config({
     // Map our TodoList implementation to the LocalStorage version.
     'todos.impl': 'collections/todos.localstorage',
 
+    // Map all App data to the data module
+    'appdata': 'data',
+
     // Third-part libs
     jquery: '../components/jquery/jquery',
     underscore: '../components/underscore/underscore',

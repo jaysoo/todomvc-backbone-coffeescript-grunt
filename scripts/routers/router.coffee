@@ -1,7 +1,7 @@
 define (require) ->
   Backbone = require 'backbone'
 
-  Data = require 'cs!data'
+  AppData = require 'appdata'
 
 
   # Todo Router
@@ -13,9 +13,9 @@ define (require) ->
     setFilter: (param) ->
 
       # Set the current filter to be used
-      Data.TodoFilter = param.trim() or ""
+      AppData.TodoFilter = param.trim() or ""
 
       # Trigger a collection filter event, causing hiding/unhiding
       # of Todo view items
-      Data.Todos.trigger "filter"
+      AppData.Todos.trigger "filter"
   )

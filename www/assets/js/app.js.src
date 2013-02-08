@@ -12784,22 +12784,19 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(this);
 
-(function() {
 
-  define('cs!data',['require'],function(require) {
-    var Data;
-    Data = {};
-    return Data;
-  });
 
-}).call(this);
+// Data module for holding initialized objects.
+define('appdata',[], function () {
+  return {};
+});
 
 (function() {
 
-  define('cs!views/todo',['require','backbone','cs!data','cs!constants'],function(require) {
-    var Backbone, Data, Keys, TodoView;
+  define('cs!views/todo',['require','backbone','appdata','cs!constants'],function(require) {
+    var AppData, Backbone, Keys, TodoView;
     Backbone = require('backbone');
-    Data = require('cs!data');
+    AppData = require('appdata');
     Keys = require('cs!constants').Keys;
     return TodoView = Backbone.View.extend({
       tagName: "li",
@@ -12829,7 +12826,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
       isHidden: function() {
         var isCompleted;
         isCompleted = this.model.get("completed");
-        return (!isCompleted && Data.TodoFilter === "completed") || (isCompleted && Data.TodoFilter === "active");
+        return (!isCompleted && AppData.TodoFilter === "completed") || (isCompleted && AppData.TodoFilter === "active");
       },
       toggleCompleted: function() {
         return this.model.toggle();
@@ -12865,12 +12862,12 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 (function() {
 
-  define('cs!views/app',['require','backbone','cs!constants','cs!views/todo','cs!data'],function(require) {
-    var AppView, Backbone, Data, Keys, TodoView;
+  define('cs!views/app',['require','backbone','cs!constants','cs!views/todo','appdata'],function(require) {
+    var AppData, AppView, Backbone, Keys, TodoView;
     Backbone = require('backbone');
     Keys = require('cs!constants').Keys;
     TodoView = require('cs!views/todo');
-    Data = require('cs!data');
+    AppData = require('appdata');
     return AppView = Backbone.View.extend({
       el: "#todoapp",
       statsTemplate: _.template($("#stats-template").html()),
@@ -12884,26 +12881,25 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
         this.$input = this.$("#new-todo");
         this.$footer = this.$("#footer");
         this.$main = this.$("#main");
-        this.listenTo(Data.Todos, "add", this.addOne);
-        this.listenTo(Data.Todos, "reset", this.addAll);
-        this.listenTo(Data.Todos, "change:completed", this.filterOne);
-        this.listenTo(Data.Todos, "filter", this.filterAll);
-        this.listenTo(Data.Todos, "all", this.render);
-        window.Todos = Data.Todos;
-        return Data.Todos.fetch();
+        this.listenTo(AppData.Todos, "add", this.addOne);
+        this.listenTo(AppData.Todos, "reset", this.addAll);
+        this.listenTo(AppData.Todos, "change:completed", this.filterOne);
+        this.listenTo(AppData.Todos, "filter", this.filterAll);
+        this.listenTo(AppData.Todos, "all", this.render);
+        return AppData.Todos.fetch();
       },
       render: function() {
         var completed, remaining;
-        completed = Data.Todos.completed().length;
-        remaining = Data.Todos.remaining().length;
-        if (Data.Todos.length) {
+        completed = AppData.Todos.completed().length;
+        remaining = AppData.Todos.remaining().length;
+        if (AppData.Todos.length) {
           this.$main.show();
           this.$footer.show();
           this.$footer.html(this.statsTemplate({
             completed: completed,
             remaining: remaining
           }));
-          this.$("#filters li a").removeClass("selected").filter("[href=\"#/" + (Data.TodoFilter || "") + "\"]").addClass("selected");
+          this.$("#filters li a").removeClass("selected").filter("[href=\"#/" + (AppData.TodoFilter || "") + "\"]").addClass("selected");
         } else {
           this.$main.hide();
           this.$footer.hide();
@@ -12919,18 +12915,18 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
       },
       addAll: function() {
         this.$("#todo-list").html("");
-        return Data.Todos.each(this.addOne, this);
+        return AppData.Todos.each(this.addOne, this);
       },
       filterOne: function(todo) {
         return todo.trigger("visible");
       },
       filterAll: function() {
-        return Data.Todos.each(this.filterOne, this);
+        return AppData.Todos.each(this.filterOne, this);
       },
       newAttributes: function() {
         return {
           title: this.$input.val().trim(),
-          order: Data.Todos.nextOrder(),
+          order: AppData.Todos.nextOrder(),
           completed: false
         };
       },
@@ -12938,17 +12934,17 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
         if (e.which !== Keys.ENTER || !this.$input.val().trim()) {
           return;
         }
-        Data.Todos.create(this.newAttributes());
+        AppData.Todos.create(this.newAttributes());
         return this.$input.val("");
       },
       clearCompleted: function() {
-        _.invoke(Data.Todos.completed(), "destroy");
+        _.invoke(AppData.Todos.completed(), "destroy");
         return false;
       },
       toggleAllComplete: function() {
         var completed;
         completed = this.allCheckbox.checked;
-        return Data.Todos.each(function(todo) {
+        return AppData.Todos.each(function(todo) {
           return todo.save({
             completed: completed
           });
@@ -12961,17 +12957,17 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 (function() {
 
-  define('cs!routers/router',['require','backbone','cs!data'],function(require) {
-    var Backbone, Data, Workspace;
+  define('cs!routers/router',['require','backbone','appdata'],function(require) {
+    var AppData, Backbone, Workspace;
     Backbone = require('backbone');
-    Data = require('cs!data');
+    AppData = require('appdata');
     return Workspace = Backbone.Router.extend({
       routes: {
         "*filter": "setFilter"
       },
       setFilter: function(param) {
-        Data.TodoFilter = param.trim() || "";
-        return Data.Todos.trigger("filter");
+        AppData.TodoFilter = param.trim() || "";
+        return AppData.Todos.trigger("filter");
       }
     });
   });
@@ -13188,14 +13184,14 @@ return Backbone.LocalStorage;
 
 (function() {
 
-  define('cs!csapp',['require','cs!views/app','cs!data','cs!routers/router','cs!todos.impl'],function(require) {
-    var AppView, Data, TodoList, Workspace;
+  define('cs!csapp',['require','cs!views/app','appdata','cs!routers/router','cs!todos.impl'],function(require) {
+    var AppData, AppView, TodoList, Workspace;
     AppView = require('cs!views/app');
-    Data = require('cs!data');
+    AppData = require('appdata');
     Workspace = require('cs!routers/router');
     TodoList = require('cs!todos.impl');
-    Data.Todos = new TodoList();
-    Data.TodoRouter = new Workspace();
+    AppData.Todos = new TodoList();
+    AppData.TodoRouter = new Workspace();
     Backbone.history.start();
     return new AppView();
   });

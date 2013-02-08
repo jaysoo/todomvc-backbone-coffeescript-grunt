@@ -1,7 +1,7 @@
 define (require) ->
   Backbone = require 'backbone'
 
-  Data = require 'cs!data'
+  AppData = require 'appdata'
   Keys = require('cs!constants').Keys
 
 
@@ -49,7 +49,7 @@ define (require) ->
     isHidden: ->
       isCompleted = @model.get("completed")
       # hidden cases only
-      (not isCompleted and Data.TodoFilter is "completed") or (isCompleted and Data.TodoFilter is "active")
+      (not isCompleted and AppData.TodoFilter is "completed") or (isCompleted and AppData.TodoFilter is "active")
 
 
     # Toggle the `"completed"` state of the model.
