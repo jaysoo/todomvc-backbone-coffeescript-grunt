@@ -2,7 +2,7 @@ require.config({
   paths: {
     // Ensure you point to where your spec folder is, base directory is scripts,
     // which is why ../test is necessary.
-    spec: '../../../test/spec',
+    spec: '../test/spec',
 
     // Ensure we can load modules prefixed with `cs!`.
     cs: '../components/require-cs/cs',
@@ -15,22 +15,7 @@ require([
   // Load specs
   // ----------
 
-  'cs!spec/forms/views/dropdown.spec',
-  'cs!spec/mediator.spec',
-  'cs!spec/messages.spec',
-  'cs!spec/mixins/editable.integration.spec',
-  'cs!spec/mixins/editable.unit.spec',
-  'cs!spec/mixins/http_error_handler.unit.spec',
-  'cs!spec/mixins/paginated_table.integration.spec',
-  'cs!spec/mixins/popover.integration.spec',
-  'cs!spec/mixins/popover.unit.spec',
-  'cs!spec/mixins/select.spec',
-  'cs!spec/mixins/server_validation_handler.unit.spec',
-  'cs!spec/mixins/table.integration.spec',
-  'cs!spec/mixins/table.unit.spec',
-  'cs!spec/mixins.spec',
-  'cs!spec/mvc.spec',
-  'cs!spec/template_helpers.spec'
+  'cs!spec/example.spec'
 
 ], function () {
   'use strict';

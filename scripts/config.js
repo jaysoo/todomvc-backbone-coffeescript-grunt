@@ -22,8 +22,6 @@ require.config({
     text: '../components/requirejs-text/text',
     localstorage: '../vendor/backbone.localStorage',
     'todos.impl': 'collections/todos.localstorage'
-  },
-  // http://requirejs.org/docs/api.html#config-enforceDefine
-  enforceDefine: true
+  }
 });
 
