@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "jquery": "1.9.1",
-    "backbone-amd": "0.9.2",
-    "backbone.stickit": "0.5.2",
+    "backbone-amd": "0.9.10",
     "lodash": "~1.0.0-rc.3",
     "require-cs": "~0.4.3",
     "requirejs-text": "~2.0.4",

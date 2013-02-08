@@ -6,6 +6,10 @@ require.config({
     },
     handlebars: {
       exports: 'Handlebars'
+    },
+    localstorage: {
+      deps: ['backbone'],
+      exports: 'Backbone.LocalStorage'
     }
   },
   paths: {
@@ -15,7 +19,9 @@ require.config({
     handlebars: '../vendor/handlebars',
     cs: '../components/require-cs/cs',
     'coffee-script': '../components/require-cs/coffee-script',
-    text: '../components/requirejs-text/text'
+    text: '../components/requirejs-text/text',
+    localstorage: '../vendor/backbone.localStorage',
+    'todos.impl': 'collections/todos.localstorage'
   },
   // http://requirejs.org/docs/api.html#config-enforceDefine
   enforceDefine: true

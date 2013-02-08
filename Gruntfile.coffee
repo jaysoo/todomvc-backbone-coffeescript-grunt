@@ -111,7 +111,7 @@ module.exports = (grunt) ->
         options:
           yuicompress: true
         files:
-          '<%= project.release %>/css/app.css': ['styles/app.less']
+          '<%= project.release %>/css/base.css': ['styles/base.less']
 
     copy:
       dist:
@@ -125,8 +125,7 @@ module.exports = (grunt) ->
         ,
 
           # Fonts and images
-          src: ['fonts/**', 'images/**']
-          cwd: 'float/'
+          src: ['images/**']
           expand: true
           dest: "<%= project.release %>/"
         ]
